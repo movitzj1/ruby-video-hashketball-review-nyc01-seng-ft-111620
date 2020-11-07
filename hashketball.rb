@@ -128,3 +128,94 @@ def game_hash
 end
 
 # Write code here
+def num_points_scored(player_name)
+  game_hash.each do |key, value|
+    value.each do |inner_key, inner_value|
+      if inner_key == :players
+        inner_value.each do |value_item|
+          if value_item[:player_name] == player_name
+            return value_item[:points]
+          end
+        end
+      end
+    end
+  end
+end
+
+def shoe_size(player_name)
+  game_hash.each do |key, value|
+    value.each do |inner_key, inner_value|
+      if inner_key == :players
+        inner_value.each do |value_item|
+          if value_item[:player_name] == player_name
+            return value_item[:shoe]
+          end
+        end
+      end
+    end
+  end
+end
+
+def team_colors(team_name)
+  game_hash.each do |key, value|
+    if value[:team_name] == team_name
+      return value[:colors]
+    end
+  end
+end
+
+def team_names
+  team_names = []
+  game_hash.each do |key, value|
+    team_names << value[:team_name]
+  end
+  return team_names
+end
+
+def player_numbers(team_name)
+  empty_array = []
+  game_hash.each do |key, value|
+    if value[:team_name] == team_name
+      value.each do |inner_key, inner_value|
+        if inner_key == :players
+          inner_value.each do |value_item|
+            empty_array << value_item[:number]
+          end
+        end
+      end
+    end
+  end
+  return empty_array
+end
+
+def player_stats(player_name)
+  game_hash.each do |key, value|
+    value.each do |inner_key, inner_value|
+      if inner_key == :players
+        inner_value.each do |value_item|
+          if value_item[:player_name] == player_name
+            return value_item
+          end
+        end
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+max = 0
+player_name = ""
+  game_hash.each do |key, value|
+    value.each do |inner_key, inner_value|
+      if inner_key == :players
+        inner_value.each do |value_item|
+          if value_item[:shoe] > max
+            max = value_item[:shoe]
+            player_name = value_item[:player_name]
+          end
+        end
+      end
+    end
+  end
+  return player_stats(player_name)[:rebounds]
+end
