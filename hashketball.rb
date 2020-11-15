@@ -203,8 +203,8 @@ def player_stats(player_name)
 end
 
 def big_shoe_rebounds
-max = 0
-player_name = ""
+  max = 0
+  player_name = ""
   game_hash.each do |key, value|
     value.each do |inner_key, inner_value|
       if inner_key == :players
@@ -219,3 +219,88 @@ player_name = ""
   end
   return player_stats(player_name)[:rebounds]
 end
+
+def most_points_scored
+  max = 0
+  player_name = ""
+  game_hash.each do |key, value|
+    value.each do |inner_key, inner_value|
+      if inner_key == :players
+        inner_value.each do |value_item|
+          if value_item[:points] > max
+            max = value_item[:points]
+            player_name = value_item[:player_name]
+          end
+        end
+      end
+    end
+  end
+  return player_name
+end
+
+#puts most_points_scored
+
+def winning_team
+  max = 0
+  team_name = ""
+  game_hash.each do |key, value|
+    total_points = 0
+    value.each do |inner_key, inner_value|
+      if inner_key == :players
+        inner_value.each do |value_item|
+          total_points += value_item[:points]
+        end
+      end
+    end
+    if total_points > max
+      max = total_points
+      team_name = value[:team_name]
+    end
+  end
+  return team_name
+end
+
+#puts winning_team
+
+def player_with_the_longest_name
+  max = 0
+  player_name = ""
+  game_hash.each do |key, value|
+    value.each do |inner_key, inner_value|
+      if inner_key == :players
+        inner_value.each do |value_item|
+          if value_item[:player_name].length > max
+            max = value_item[:player_name].length
+            player_name = value_item[:player_name]
+          end
+        end
+      end
+    end
+  end
+  return player_name
+end
+#puts player_with_the_longest_name
+
+def long_name_steals_a_ton?
+  max = 0
+  player_name = ""
+  game_hash.each do |key, value|
+    value.each do |inner_key, inner_value|
+      if inner_key == :players
+        inner_value.each do |value_item|
+          if value_item[:steals] > max
+            max = value_item[:steals]
+            player_name = value_item[:player_name]
+          end
+        end
+      end
+    end
+  end
+  if player_with_the_longest_name == player_name
+    return true
+  else
+    return false
+  end
+end
+
+puts long_name_steals_a_ton?
